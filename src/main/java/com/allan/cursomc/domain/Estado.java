@@ -24,6 +24,9 @@ public class Estado implements Serializable{
 	private List<Cidade> cidades = new ArrayList<>();
 		
 	//Construtor
+	public Estado() {
+		// TODO Auto-generated constructor stub
+	}
 	public Estado(Integer id, String nome) {
 		super();
 		this.id = id;
