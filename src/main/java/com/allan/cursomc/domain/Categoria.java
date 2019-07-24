@@ -13,7 +13,7 @@ public class Categoria implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	private String nome;
 	
 	public Categoria() {
@@ -28,10 +28,10 @@ public class Categoria implements Serializable{
 	
 	
 	//GETTERS E SETTERS
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getNome() {
