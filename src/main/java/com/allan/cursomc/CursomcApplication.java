@@ -13,6 +13,7 @@ import com.allan.cursomc.domain.Cidade;
 import com.allan.cursomc.domain.Cliente;
 import com.allan.cursomc.domain.Endereco;
 import com.allan.cursomc.domain.Estado;
+import com.allan.cursomc.domain.ItemPedido;
 import com.allan.cursomc.domain.Pagamento;
 import com.allan.cursomc.domain.PagamentoComBoleto;
 import com.allan.cursomc.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.allan.cursomc.repositories.CidadeRepository;
 import com.allan.cursomc.repositories.ClienteRepository;
 import com.allan.cursomc.repositories.EnderecoRepository;
 import com.allan.cursomc.repositories.EstadoRepository;
+import com.allan.cursomc.repositories.ItemPedidoRepository;
 import com.allan.cursomc.repositories.PagamentoRepository;
 import com.allan.cursomc.repositories.PedidoRepository;
 import com.allan.cursomc.repositories.ProdutoRepository;
@@ -48,6 +50,8 @@ public class CursomcApplication implements CommandLineRunner {
 	private PedidoRepository pedidoRepo;
 	@Autowired
 	private PagamentoRepository pagamentoRepo;
+	@Autowired
+	private ItemPedidoRepository itemPedRepo;
 	
 	
 	public static void main(String[] args) {
@@ -108,6 +112,18 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		cli1.getPedidos().addAll(Arrays.asList(ped1,ped2));
 		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().add(ip1);
+		p2.getItens().add(ip3);
+		p3.getItens().add(ip2);
+		
+		
 		estadoRepo.saveAll(Arrays.asList(est1,est2));
 		cidadeRepo.saveAll(Arrays.asList(c1,c2,c3));
 		categoriaRepo.saveAll(Arrays.asList(cat1,cat2));
@@ -116,6 +132,7 @@ public class CursomcApplication implements CommandLineRunner {
 		enderecoRepo.saveAll(Arrays.asList(e1,e2));
 		pedidoRepo.saveAll(Arrays.asList(ped1,ped2));
 		pagamentoRepo.saveAll(Arrays.asList(pagt1, pagt2));
+		itemPedRepo.saveAll(Arrays.asList(ip1,ip2,ip3));
 	}
 
 }
