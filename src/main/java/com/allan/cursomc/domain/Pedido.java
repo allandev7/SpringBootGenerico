@@ -23,7 +23,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Pedido implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
-	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
@@ -38,9 +37,6 @@ public class Pedido implements Serializable{
 	private Date instante;
 	
 	
-
-	
-	@JsonManagedReference
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
 	private Pagamento pagamento;
 	

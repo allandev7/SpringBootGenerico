@@ -32,7 +32,7 @@ public class Produto implements Serializable{
 	private String nome;
 	private double preco;
 	
-	@JsonBackReference //avisa que ja ta sendo manuseado no outro lado
+	@JsonIgnore //avisa que ja ta sendo manuseado no outro lado
 	@ManyToMany
 	@JoinTable(name = "PRODUTO_CATEGORIA", joinColumns = @JoinColumn(name="produto_id"),
 				inverseJoinColumns = @JoinColumn(name="categoria_id"))
