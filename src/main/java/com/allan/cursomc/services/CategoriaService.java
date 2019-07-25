@@ -1,12 +1,15 @@
 package com.allan.cursomc.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.allan.cursomc.domain.Categoria;
 import com.allan.cursomc.repositories.CategoriaRepository;
+import com.allan.cursomc.services.exception.DataIntegrityException;
 import com.allan.cursomc.services.exception.ObjectNotFoundException;
 ;
 
@@ -30,6 +33,21 @@ public class CategoriaService {
 	public Categoria update(Categoria obj) {
 		find(obj.getId());//verifica se o id existe
 		return repo.save(obj);
+	}
+	
+	public void delete (Integer id) {
+		find(id);//verifica se o id existe
+		try {
+			repo.deleteById(id);
+		}catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível excluir uma categoria que contém"
+					+ " produtos");
+		}
+		
+	}
+
+	public List<Categoria> findAll() {
+		return repo.findAll();
 	}
 
 	
