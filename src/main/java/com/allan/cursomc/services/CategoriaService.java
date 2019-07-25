@@ -23,8 +23,14 @@ public class CategoriaService {
 	} 
 	
 	public Categoria insert(Categoria obj) {
-		obj.setId(null);
+		obj.setId(null);// deixa nulo já que é um insert
 		return repo.save(obj);
 	}
+
+	public Categoria update(Categoria obj) {
+		find(obj.getId());//verifica se o id existe
+		return repo.save(obj);
+	}
+
 	
 }

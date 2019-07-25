@@ -4,7 +4,6 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 
-import org.springframework.data.web.JsonPath;
 
 import com.allan.cursomc.domain.enums.EstadoPagamento;
 import com.fasterxml.jackson.annotation.JsonFormat;

@@ -13,7 +13,6 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.allan.cursomc.domain.enums.EstadoPagamento;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
