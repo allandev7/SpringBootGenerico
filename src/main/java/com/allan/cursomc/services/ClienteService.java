@@ -10,14 +10,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import com.allan.cursomc.domain.Categoria;
 import com.allan.cursomc.domain.Cidade;
 import com.allan.cursomc.domain.Cliente;
 import com.allan.cursomc.domain.Endereco;
 import com.allan.cursomc.domain.enums.TipoCliente;
-import com.allan.cursomc.domain.Cliente;
 import com.allan.cursomc.dto.ClienteDTO;
 import com.allan.cursomc.dto.ClienteNewDto;
+import com.allan.cursomc.repositories.CidadeRepository;
 import com.allan.cursomc.repositories.ClienteRepository;
 import com.allan.cursomc.repositories.EnderecoRepository;
 import com.allan.cursomc.services.exception.DataIntegrityException;
@@ -26,6 +25,9 @@ import com.allan.cursomc.services.exception.ObjectNotFoundException;
 
 @Service
 public class ClienteService {
+	
+	@Autowired
+	private CidadeRepository cidadeRepo;
 	
 	@Autowired
 	private ClienteRepository repo;
@@ -81,8 +83,9 @@ public class ClienteService {
 	}
 	
 	public Cliente fromDTO(ClienteNewDto objDTO) {
+		System.out.println("**************  "+ objDTO.getCidadeId());
 		Cliente cli = new Cliente(null, objDTO.getNome(), objDTO.getEmail(), objDTO.getCpfOuCnpj(), TipoCliente.toEnum(objDTO.getTipo()));
-		Cidade cid = new Cidade(objDTO.getCidadeId(), null, null);
+		Cidade cid = cidadeRepo.getOne(objDTO.getCidadeId());
 		Endereco end = new Endereco(null, objDTO.getLogradouro(), objDTO.getNumero(), objDTO.getComplemento(), 
 					objDTO.getBairro(), objDTO.getCep(), cli, cid);
 		cli.getEnderecos().add(end);
