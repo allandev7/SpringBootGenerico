@@ -1,0 +1,95 @@
+[33mcommit f9beb5d4b5ae3babb406c9119a851b14894a6dce[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: allandev7 <allansilvapereira10@gmail.com>
+Date:   Thu Jul 25 14:49:52 2019 -0300
+
+    Listando todas categorias com DTO
+
+[33mcommit 69d1d2a4ea14d448fb345724a062c3053c675078[m
+Author: allandev7 <allansilvapereira10@gmail.com>
+Date:   Thu Jul 25 12:54:50 2019 -0300
+
+    atualizando com PUT
+
+[33mcommit 028402ae703254e8aa5f296b1293147bc491394e[m
+Author: allandev7 <allansilvapereira10@gmail.com>
+Date:   Thu Jul 25 12:29:21 2019 -0300
+
+    Inserindo uma nova categoria com o POST
+
+[33mcommit 893d536b3a5e508e85e391fef5a82c63bba39146[m
+Author: allandev7 <allansilvapereira10@gmail.com>
+Date:   Thu Jul 25 11:11:07 2019 -0300
+
+    utiliazndo apenas jsonignore
+
+[33mcommit 888ee86dcd67fdecec271b2f61abfeeab665a0bc[m
+Author: allandev7 <allansilvapereira10@gmail.com>
+Date:   Thu Jul 25 11:05:40 2019 -0300
+
+    endpoint /pedidos/id
+
+[33mcommit c2a9be67962ff03dd003df313bc8800a7cc13d55[m
+Author: allandev7 <allansilvapereira10@gmail.com>
+Date:   Thu Jul 25 10:32:37 2019 -0300
+
+    ItemPedido e ItemPedidoPK
+
+[33mcommit d8819fe4c73bba7e12d5ab6537cdcd20876d2e28[m
+Author: allandev7 <allansilvapereira10@gmail.com>
+Date:   Wed Jul 24 16:54:14 2019 -0300
+
+    Pedido, EstadoPagamento e Pagameto
+
+[33mcommit 02a38e24652a067b4b382ddd3ab12004280b08b2[m
+Author: allandev7 <allansilvapereira10@gmail.com>
+Date:   Wed Jul 24 15:35:24 2019 -0300
+
+    Endpoint /clientes/{id}
+
+[33mcommit 4a57d3622ae90e90804d6dc81e077820426b8795[m
+Author: allandev7 <allansilvapereira10@gmail.com>
+Date:   Wed Jul 24 14:58:23 2019 -0300
+
+    Cliente, endereco e telefone
+
+[33mcommit 1ad4ae6e060dd4e1311e5bb37f27413069a1eb15[m
+Author: allandev7 <allansilvapereira10@gmail.com>
+Date:   Wed Jul 24 12:22:25 2019 -0300
+
+    Estado e Cidade
+
+[33mcommit c1917c93c88a5cc5054ddc8a0925ed9f57224758[m
+Author: allandev7 <allansilvapereira10@gmail.com>
+Date:   Wed Jul 24 11:59:09 2019 -0300
+
+    Ajustes no endpoint /categorias/id
+
+[33mcommit 7a9e415f0353415f4e4dae3a23b287a869c61685[m
+Author: allandev7 <allansilvapereira10@gmail.com>
+Date:   Wed Jul 24 10:28:49 2019 -0300
+
+    Criando operação de instanciação
+
+[33mcommit 29bfe5b2de968402444976a851019df3a667ce64[m
+Author: allandev7 <allansilvapereira10@gmail.com>
+Date:   Tue Jul 23 14:23:52 2019 -0300
+
+    banco de dados h2 e criacao automática da base de dados
+
+[33mcommit 7b827605b40b143d7700895b5e88e67016bcc455[m
+Author: allandev7 <allansilvapereira10@gmail.com>
+Date:   Tue Jul 23 14:03:47 2019 -0300
+
+    Testando a primeira classe de domínio - Categoria
+
+[33mcommit d553e891af6079f30cfee6c110b69a306d2b6efb[m
+Author: allandev7 <allansilvapereira10@gmail.com>
+Date:   Tue Jul 23 12:48:48 2019 -0300
+
+    Testando o REST
+
+[33mcommit 6f6b855eb7a976ad5008731ed6b878b7f26bd501[m
+Author: allandev7 <allansilvapereira10@gmail.com>
+Date:   Tue Jul 23 12:26:09 2019 -0300
+
+    Projeto criado
