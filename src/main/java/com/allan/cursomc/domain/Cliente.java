@@ -103,9 +103,9 @@ public class Cliente implements Serializable{
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
-	public void setTipo(Integer tipo) {
-		this.tipo = tipo;
-	}
+//	public void setTipo(Integer tipo) {
+//		this.tipo = tipo;
+//	}
 
 	public List<Endereco> getEnderecos() {
 		return enderecos;

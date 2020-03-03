@@ -44,21 +44,37 @@ public class Pedido implements Serializable{
 	private Endereco endereco;
 	
 	
+
+
 	public Pedido() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
+
+
+
+	public Pedido(Cliente cliente, Set<ItemPedido> itens, Integer id, Date instante, Pagamento pagamento,
+			Endereco endereco) {
+		super();
+		this.cliente = cliente;
+		this.itens = itens;
+		this.id = id;
+		this.instante = instante;
+		this.pagamento = pagamento;
+		this.endereco = endereco;
+	}
 	
 	
 	
-	//Getters e Setters
-	
-	public Pedido(Integer id, Date date, Endereco endereco, Cliente cliente) {
+	public Pedido(Integer id, Date instante, Endereco endereco, Cliente cliente) {
 		super();
 		this.id = id;
-		this.instante = date;
-		this.endereco = endereco;
 		this.cliente = cliente;
+		this.instante = instante;
+		this.endereco = endereco;
+
 	}
+
 
 
 	public double getValorTotal() {
