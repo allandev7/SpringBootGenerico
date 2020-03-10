@@ -12,15 +12,18 @@ import com.allan.cursomc.domain.ItemPedido;
 import com.allan.cursomc.domain.PagamentoComBoleto;
 import com.allan.cursomc.domain.Pedido;
 import com.allan.cursomc.domain.enums.EstadoPagamento;
+import com.allan.cursomc.repositories.ClienteRepository;
 import com.allan.cursomc.repositories.ItemPedidoRepository;
 import com.allan.cursomc.repositories.PagamentoRepository;
 import com.allan.cursomc.repositories.PedidoRepository;
-import com.allan.cursomc.repositories.ProdutoRepository;
 import com.allan.cursomc.services.exception.ObjectNotFoundException;
 
 
 @Service
 public class PedidoService {
+	
+	@Autowired
+	private ClienteService clienteServ;
 	
 	@Autowired
 	private PedidoRepository repo;
@@ -48,6 +51,7 @@ public class PedidoService {
 		obj.setId(null);
 		System.out.println(obj.getCliente().getTipo());
 		obj.setInstante(new Date());
+		obj.setCliente(clienteServ.find(obj.getCliente().getId()));
 		obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
 		obj.getPagamento().setPedido(obj);
 		if(obj.getPagamento() instanceof PagamentoComBoleto) {
@@ -58,10 +62,12 @@ public class PedidoService {
 		pagamentoRepo.save(obj.getPagamento());
 		for(ItemPedido ip : obj.getItens()) {
 			ip.setDesconto(0.0);
+			ip.setProduto(produtoServ.find(ip.getProduto().getId()));
 			ip.setPreco(produtoServ.find(ip.getProduto().getId()).getPreco());
 			ip.setPedido(obj);
 		}
 		itemPedidoRepo.saveAll(obj.getItens());
+		System.out.println(obj);
 		return obj;
 	}
 	

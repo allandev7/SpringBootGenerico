@@ -1,6 +1,8 @@
 package com.allan.cursomc.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -9,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class ItemPedido implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
 	@JsonIgnore
 	@EmbeddedId
@@ -30,6 +33,22 @@ public class ItemPedido implements Serializable{
 		this.quantidade = quantidade;
 		this.preco = preco;
 	}
+	
+	@Override
+	public String toString() {
+	NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt","BR"));
+		StringBuilder builder = new StringBuilder();
+		builder.append(getProduto().getNome());
+		builder.append(", Quantidade: ");
+		builder.append(getQuantidade());
+		builder.append(", Preço: ");
+		builder.append(nf.format(getPreco()));
+		builder.append(", SubTotal: ");
+		builder.append(nf.format(getSubTotal()));
+		builder.append("\n");
+		return builder.toString();
+	}
+
 	
 	public double getSubTotal() {
 		return (preco - desconto) * quantidade;
