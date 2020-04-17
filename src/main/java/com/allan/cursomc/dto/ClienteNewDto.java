@@ -10,14 +10,13 @@ import org.hibernate.validator.constraints.Length;
 import com.allan.cursomc.services.validation.ClientInsert;
 
 @ClientInsert
-public class ClienteNewDto implements Serializable{
+public class ClienteNewDto implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	
+
 	public ClienteNewDto() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@NotEmpty(message = "Preenchimento obrigatório")
 	@Length(min = 4, max = 120, message = "O tamanho deve ser entre 4 e 120 caracteres")
 	private String nome;
@@ -26,9 +25,9 @@ public class ClienteNewDto implements Serializable{
 	private String email;
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String cpfOuCnpj;
-	
+
 	private Integer tipo;
-	
+
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String logradouro;
 	@NotEmpty(message = "Preenchimento obrigatório")
@@ -38,16 +37,26 @@ public class ClienteNewDto implements Serializable{
 	private String bairro;
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String cep;
-	
+
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String telefone1;
-	
+
 	private String telefone2;
-	
+
 	private String telefone3;
-	
+
 	private Integer cidadeId;
 
+	@NotEmpty(message = "Preenchimento obrigatório")
+	private String senha;
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 
 	public String getNome() {
 		return nome;
@@ -152,6 +161,5 @@ public class ClienteNewDto implements Serializable{
 	public void setCidadeId(Integer cidadeId) {
 		this.cidadeId = cidadeId;
 	}
-	
-	
+
 }
