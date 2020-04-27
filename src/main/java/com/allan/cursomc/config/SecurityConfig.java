@@ -15,6 +15,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.allan.cursomc.security.JWTAuthenticationFilter;
+import com.allan.cursomc.security.JWTUtil;
 import com.allan.cursomc.services.UserDetailServiceImp;
 
 @Configuration
@@ -23,6 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
 	private UserDetailsService userDetailService;
+	
+	@Autowired
+	private JWTUtil jwtUtil;
 
 	private static final String [] PUBLIC_MACTHERS = {
 	};
@@ -37,6 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			"/produtos/**",
 			"/categorias/**"
 	};
+	
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -47,6 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers(HttpMethod.POST, PUBLIC_POST_MACTHERS).permitAll()
 		.antMatchers(HttpMethod.PUT, PUBLIC_PUT_MACTHERS).permitAll()
 		.anyRequest().authenticated();
+		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	
