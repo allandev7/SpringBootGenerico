@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.allan.cursomc.services.exception.AuthorizationException;
 import com.allan.cursomc.services.exception.DataIntegrityException;
 import com.allan.cursomc.services.exception.ObjectNotFoundException;
 
@@ -35,5 +36,11 @@ public class ResourceExceptionHandler {
 				err.addError(x.getField(), x.getDefaultMessage());
 			}
 			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(err);
+		}
+		
+		@ExceptionHandler(AuthorizationException.class)
+		public ResponseEntity<StandarError> authorization(AuthorizationException e, HttpServletRequest req) {
+			StandarError err = new StandarError(System.currentTimeMillis(), HttpStatus.FORBIDDEN.value(), "Acesso Negado", e.getMessage(), req.getRequestURI());
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
 		}
 }
