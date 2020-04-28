@@ -37,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private static final String[] PUBLIC_PUT_MACTHERS = {};
 
 	private static final String[] PUBLIC_POST_MACTHERS = {
+			"/auth/forgot/**",
 			"/clientes/**"
 	};
 
