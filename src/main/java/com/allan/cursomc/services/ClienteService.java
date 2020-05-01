@@ -1,16 +1,19 @@
 package com.allan.cursomc.services;
 
+import java.awt.image.BufferedImage;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.allan.cursomc.domain.Cidade;
 import com.allan.cursomc.domain.Cliente;
@@ -26,7 +29,7 @@ import com.allan.cursomc.security.UserSS;
 import com.allan.cursomc.services.exception.AuthorizationException;
 import com.allan.cursomc.services.exception.DataIntegrityException;
 import com.allan.cursomc.services.exception.ObjectNotFoundException;
-;
+
 
 @Service
 public class ClienteService {
@@ -37,11 +40,21 @@ public class ClienteService {
 	@Autowired
 	private ClienteRepository repo;
 	
+	@Value(value = "${img.prefix.estabelecimeto.profile}")
+	private String prefix;
+	
 	@Autowired
 	private EnderecoRepository enderecoRepo;
 	
 	@Autowired
+	private S3Service s3service;
+
+	
+	@Autowired
 	private BCryptPasswordEncoder pe;
+	
+	@Autowired
+	private ImageService imgServ;
 	
 	public Cliente insert(Cliente obj) {
 		obj.setId(null);// deixa nulo já que é um insert
@@ -77,6 +90,19 @@ public class ClienteService {
 					+ " pedidos");
 		}
 		
+	}
+	
+	public URI uploadPicture(MultipartFile multiPartFile) {
+		UserSS user = UserService.getCurrentUser();
+		if(user!=null) {
+			BufferedImage img = imgServ.getJpgImageFromFile(multiPartFile);
+			
+			String fileName = prefix + user.getId() + ".jpg";
+			
+			return s3service.uploadFile(imgServ.getInputStream(img, "jpg"), fileName, "image");
+		}else {
+			throw new ObjectNotFoundException("Não há usuários logados");
+		}
 	}
 
 	public List<Cliente> findAll() {
