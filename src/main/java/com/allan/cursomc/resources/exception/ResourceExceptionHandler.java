@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.allan.cursomc.services.exception.AuthorizationException;
 import com.allan.cursomc.services.exception.DataIntegrityException;
 import com.allan.cursomc.services.exception.ObjectNotFoundException;
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.services.s3.model.AmazonS3Exception;
+import com.pagamento.resources.exception.StandardError;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
@@ -31,7 +35,7 @@ public class ResourceExceptionHandler {
 		
 		@ExceptionHandler(MethodArgumentNotValidException.class)
 		public ResponseEntity<StandarError> validation(MethodArgumentNotValidException e, HttpServletRequest req) {
-			ValidationError err = new ValidationError(System.currentTimeMillis(),HttpStatus.UNPROCESSABLE_ENTITY.value(), "Erro de validação", "Erro de validação", req.getRequestURI());
+			ValidationError err = new ValidationError(System.currentTimeMillis(),HttpStatus.UNPROCESSABLE_ENTITY.value(), "Erro de validação", e.getMessage(), req.getRequestURI());
 			for(FieldError x : e.getBindingResult().getFieldErrors()) {
 				err.addError(x.getField(), x.getDefaultMessage());
 			}
@@ -42,5 +46,24 @@ public class ResourceExceptionHandler {
 		public ResponseEntity<StandarError> authorization(AuthorizationException e, HttpServletRequest req) {
 			StandarError err = new StandarError(System.currentTimeMillis(), HttpStatus.FORBIDDEN.value(), "Acesso Negado", e.getMessage(), req.getRequestURI());
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
+		}
+		
+		@ExceptionHandler(AmazonServiceException.class)
+		public ResponseEntity<StandarError> amazonService(AmazonServiceException e, HttpServletRequest request) {
+			HttpStatus code = HttpStatus.valueOf(e.getErrorCode());
+			StandarError err = new StandarError(System.currentTimeMillis(), code.value(), "Erro Amazon Service", e.getMessage(), request.getRequestURI()); 
+			return ResponseEntity.status(code).body(err);
+		}
+
+		@ExceptionHandler(AmazonClientException.class)
+		public ResponseEntity<StandarError> amazonClient(AmazonClientException e, HttpServletRequest request) {
+			StandarError err = new StandarError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "Erro Amazon Cliente", e.getMessage(), request.getRequestURI());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+		}
+
+		@ExceptionHandler(AmazonS3Exception.class)
+		public ResponseEntity<StandarError> amazonS3(AmazonS3Exception e, HttpServletRequest request) {
+			StandarError err = new StandarError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "Erro AmazonS3", e.getMessage(), request.getRequestURI());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 		}
 }
