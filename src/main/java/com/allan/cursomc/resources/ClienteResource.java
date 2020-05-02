@@ -1,4 +1,5 @@
 package com.allan.cursomc.resources;
+
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,71 +27,74 @@ import com.allan.cursomc.services.ClienteService;
 import javassist.tools.rmi.ObjectNotFoundException;
 
 @RestController
-@RequestMapping(value="/clientes")
+@RequestMapping(value = "/clientes")
 public class ClienteResource {
-	
+
 	@Autowired
 	private ClienteService service;
-	
-	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> listar(@PathVariable Integer id) throws ObjectNotFoundException{
-		Cliente cat1 = service.find(id);
-		System.out.println(id);
-		return ResponseEntity.ok().body(cat1);
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Cliente> listar(@PathVariable Integer id) throws ObjectNotFoundException {
+		Cliente cli = service.find(id);
+		return ResponseEntity.ok().body(cli);
 	}
-	
-	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert (@Valid @RequestBody ClienteNewDto objDTO){
-		Cliente obj  = service.fromDTO(objDTO);
+
+	@RequestMapping(value = "/email", method = RequestMethod.GET)
+	public ResponseEntity<Cliente> findByEmail(@RequestParam(value = "value") String email)
+			throws ObjectNotFoundException {
+		Cliente cli = service.findByEmail(email);
+		return ResponseEntity.ok().body(cli);
+	}
+
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDto objDTO) {
+		Cliente obj = service.fromDTO(objDTO);
 		obj = service.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}").buildAndExpand(obj.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
-		
+
 	}
-	
-	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Void> update(@PathVariable Integer id, 
-			@Valid @RequestBody ClienteDTO objDTO){
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@PathVariable Integer id, @Valid @RequestBody ClienteDTO objDTO) {
 		Cliente obj = service.fromDTO(objDTO);
 		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}
-	
-	@RequestMapping(value="/picture", method = RequestMethod.POST)
-	public ResponseEntity<Void> uploadPicture(@RequestParam(name = "file")MultipartFile file){
+
+	@RequestMapping(value = "/picture", method = RequestMethod.POST)
+	public ResponseEntity<Void> uploadPicture(@RequestParam(name = "file") MultipartFile file) {
 		URI uri = service.uploadPicture(file);
 		return ResponseEntity.created(uri).build();
 	}
-	
+
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete (@PathVariable Integer id){
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<ClienteDTO>> findAll() throws ObjectNotFoundException{
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<ClienteDTO>> findAll() throws ObjectNotFoundException {
 		List<Cliente> list = service.findAll();
-		List<ClienteDTO> listDTO = list.stream().map(//aqui faz a conversão "mapeamento"
+		List<ClienteDTO> listDTO = list.stream().map(// aqui faz a conversão "mapeamento"
 				obj -> new ClienteDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
-	
+
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	@RequestMapping(value = "/page", method=RequestMethod.GET)
-	public ResponseEntity<Page<ClienteDTO>> findPage(
-			@RequestParam(value= "page", defaultValue = "0")Integer page,
-			@RequestParam(value= "linesPerPage", defaultValue = "24")Integer linesPerPage,
-			@RequestParam(value= "orderBy", defaultValue = "nome")String orderBy,
-			@RequestParam(value= "direction", defaultValue = "ASC")String direction) {
-		
+	@RequestMapping(value = "/page", method = RequestMethod.GET)
+	public ResponseEntity<Page<ClienteDTO>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
+			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+
 		Page<Cliente> list = service.findPage(page, linesPerPage, orderBy, direction);
-		
-		Page<ClienteDTO> listDTO = list.map(//Page não precisa do stream pois já é java 8
+
+		Page<ClienteDTO> listDTO = list.map(// Page não precisa do stream pois já é java 8
 				obj -> new ClienteDTO(obj));
 		return ResponseEntity.ok().body(listDTO);
 	}
