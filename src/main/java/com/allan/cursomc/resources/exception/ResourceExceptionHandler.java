@@ -15,7 +15,6 @@ import com.allan.cursomc.services.exception.ObjectNotFoundException;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
-import com.pagamento.resources.exception.StandardError;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
