@@ -16,6 +16,7 @@ validações, autenticação, e upload de imagens.
 * [JPA com Hibernate](https://hibernate.org/orm/documentation/5.4/)
 * [Amazon AWS S3](https://docs.aws.amazon.com/pt_br/AmazonS3/latest/dev/Welcome.html)
 * [JWT](https://github.com/auth0/java-jwt)
+* [Spring mail(SMTP)](https://www.baeldung.com/spring-email/)
 
 ## Contato :email:
 Para mais informações :smirk: :
